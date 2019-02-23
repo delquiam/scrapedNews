@@ -1,0 +1,41 @@
+{{!-- <button class="scrape">Scrape Articles</button> --}}
+
+{{!-- {{#each articles}}
+<p>{{title}}</p>
+<p>{{link}}</p>
+<p>{{summary}}</p>
+<button class="saved" data-id="{{_id}}">Save Article</button>
+{{/each}} --}}
+
+<!--Homepage-->
+<div class="container">
+    <div class="col-md-12 jumbotron">
+        <div class="text-center">
+            <h1> The Lily Mongo Scraper</h1>
+        </div>
+
+    </div>
+    <div class="col-md-12">
+        {{#if articles}}
+            {{#each articles}}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>{{title}}</h4>
+                </div>
+                <div class="panel-body">
+                    <p> {{summary}}</p>
+                    <a href={{link}} target="_blank">{{link}}</a>
+                    <br><br>
+                    <button type="button" class="btn btn-secondary" data-id={{_id}}>Save Article</button>
+                </div>
+            </div>
+            {{/each}}
+        {{else}}
+        <div class="panel panel-default">
+            <div class="panel-body">
+            <h4>Oops...Looks like we don't have any new articles.</h4>
+            </div>
+         </div>
+        {{/if}}
+    </div>
+</div>

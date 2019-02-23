@@ -1,0 +1,49 @@
+{{!-- this is where delete and notes --}}
+
+{{!-- {{#each articles}}
+<p>{{title}}</p>
+<p>{{link}}</p>
+<p>{{summary}}</p>
+<button class="delete" data-id="{{_id}}">Delete Article</button>
+{{/each}} --}}
+
+<!--Saved Articles Page-->
+
+<div class="container">
+
+    <div class="col-md-12 jumbotron">
+        <div class="text-center">
+            <h1> Saved Articles</h1>
+        </div>
+    </div>
+    <div class="col-md-12">
+        {{#if articles}}
+        {{#each articles}}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>{{title}}</h4>
+            </div>
+            <div class="panel-body">
+                <p> {{summary}}</p>
+                <a href={{link}} target="_blank">{{link}}</a>
+                <br><br>
+                <button type="button" class="btn btn-secondary addNote" data-toggle="modal"
+                    data-target="#noteModal{{_id}}" data-id={{_id}}>Add a Note</button>
+                <button type="button" class="btn btn-secondary delete" data-id={{_id}}>Delete</button>
+            </div>
+        </div>
+        {{/each}}
+        {{else}}
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h4>There are no saved articles.</h4>
+            </div>
+        </div>
+        {{/if}}
+    </div>
+</div>
+
+<!--Clicked Notes Modal-->
+{{#each articles}}
+{{> note }}
+{{/each}}
