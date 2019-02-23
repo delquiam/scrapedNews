@@ -11,7 +11,7 @@
 <div class="container">
     <div class="col-md-12 jumbotron" id="front-page">
         <div class="text-center">
-            <div style="font-family: 'Special Elite', cursive; " >The Lily Mongo Scraper</div>
+            <div style="font-family: 'Special Elite', cursive; " ><h1>The Lily Mongo Scraper</h1></div>
             {{!-- <h1> The Lily Mongo Scraper</h1> --}}
 
         </div>
@@ -28,7 +28,7 @@
                 <p> {{summary}}</p>
                 <a href={{link}} target="_blank">{{link}}</a>
                 <br><br>
-                <button type="button" class="btn btn-secondary" id="save">Save Article</button>
+                <button type="button" class="btn btn-secondary save" data-id={{_id}}>Save Article</button>
             </div>
         </div>
         {{/each}}

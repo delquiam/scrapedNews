@@ -77,18 +77,6 @@ app.post("/scrape", function (req, res) {
     });
 });
 
-
-// // Route for getting all Articles from the db
-// app.get("/saved", function (req, res) {
-//     // Grab every document in the Articles collection
-//     db.Article.find({ saved: true }).populate("note").exec(function (err, articles) {
-//         var hbsObject = {
-//             article: articles
-//         };
-//         // If we were able to successfully find Articles, send them back to the client
-//         res.render("saved", hbsObject);
-//     });
-// });
 // // Route for getting all Articles from the db
 app.get("/saved", function (req, res) {
     // Grab every document in the Articles collection
@@ -112,6 +100,10 @@ app.get("/articles", function (req, res) {
         }
     });
 })
+
+
+
+
 // // Route for grabbing a specific Article by id, populate it with it's note
 app.get("/articles/:id", function (req, res) {
     // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
@@ -129,8 +121,8 @@ app.get("/articles/:id", function (req, res) {
 });
 
 // Route for saving/updating an Article
-app.post("/articles/saved/:id", function (req, res) {
-    db.Article.findOneAndUpdate({ _id: req.params.id }, { "saved": true })
+app.put("/articles/saved/:id", function (req, res) {
+    db.Article.findOneAndUpdate({ _id: req.params.id }, { saved: true })
         .exec(function (err, doc) {
             if (err) {
                 console.log(err);
@@ -140,9 +132,12 @@ app.post("/articles/saved/:id", function (req, res) {
             }
         });
 });
+
+
+
 // Delete an article
 app.post("/articles/delete/:id", function (req, res) {
-    db.Article.findOneAndUpdate({ _id: req.params.id }, { "saved": false, "note": [] })
+    db.Article.findOneAndUpdate({ _id: req.params.id }, { saved: false })
         .exec(function (err, doc) {
             if (err) {
                 console.log(err);
@@ -152,6 +147,8 @@ app.post("/articles/delete/:id", function (req, res) {
             }
         });
 });
+
+
 // Create a new note
 app.post("/notes/saved/:id", function (req, res) {
     // Create a new note and pass the req.body to the entry
@@ -169,7 +166,7 @@ app.post("/notes/saved/:id", function (req, res) {
         // Otherwise
         else {
             // Use the article id to find and update it's notes
-            db.Article.findOneAndUpdate({ "_id": req.params.id }, { $push: { "note": note } })
+            db.Article.findOneAndUpdate({ _id: req.params.id }, { $push: { note: note } })
                 // Execute the above query
                 .exec(function (err) {
                     // Log any errors
@@ -186,17 +183,20 @@ app.post("/notes/saved/:id", function (req, res) {
     });
 });
 
+
+
+
 // Delete a note
 app.delete("/notes/delete/:note_id/:article_id", function (req, res) {
     // Use the note id to find and delete it
-    db.Note.findOneAndRemove({ "_id": req.params.note_id }, function (err) {
+    db.Note.findOneAndRemove({ _id: req.params.note_id }, function (err) {
         // Log any errors
         if (err) {
             console.log(err);
             res.send(err);
         }
         else {
-            db.Article.findOneAndUpdate({ "_id": req.params.article_id }, { $pull: { "notes": req.params.note_id } })
+            db.Article.findOneAndUpdate({ _id: req.params.article_id }, { $pull: { notes: req.params.note_id } })
                 // Execute the above query
                 .exec(function (err) {
                     // Log any errors

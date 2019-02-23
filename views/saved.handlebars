@@ -13,7 +13,7 @@
 
     <div class="col-md-12 jumbotron">
         <div class="text-center">
-            <h1> Saved Articles</h1>
+           <div style="font-family: 'Special Elite', cursive; " ><h1>Saved Articles</h1></div>
         </div>
     </div>
     <div class="col-md-12">
@@ -29,7 +29,7 @@
                 <br><br>
                 <button type="button" class="btn btn-secondary addNote" data-toggle="modal"
                     data-target="#noteModal{{_id}}" data-id={{_id}}>Add a Note</button>
-                <button type="button" class="btn btn-secondary" id="delete" data-id={{_id}}>Delete</button>
+                <button type="button" class="btn btn-secondary delete" data-id={{_id}}>Delete</button>
             </div>
         </div>
         {{/each}}
@@ -45,5 +45,41 @@
 
 <!--Clicked Notes Modal-->
 {{#each articles}}
-{{> note }}
+<div class="modal fade modalNote" id="noteModal{{_id}}" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Notes for {{title}}</h4>
+            </div>
+            <div class="modal-body">
+                {{#if notes}}
+                {{#each notes}}
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <p class="previousNotes"> {{body}}</p>
+                        <button type="button" class="btn btn-secondary deleteNote" data-note-id={{_id}}
+                            data-article-id={{articles}}>X</button>
+                    </div>
+                </div>
+                {{/each}}
+                {{else}}
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h4>No notes for this article.</h4>
+                    </div>
+                </div>
+                {{/if}}
+                <div class="form-group">
+                    <textarea id="noteText{{_id}}" class="form-control" rows="4" placeholder="New Note"></textarea>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary saveNote" data-id={{_id}}>Save Note</button>
+            </div>
+        </div>
+    </div>
+</div>
 {{/each}}
