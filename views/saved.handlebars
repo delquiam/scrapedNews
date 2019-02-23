@@ -29,14 +29,14 @@
                 <br><br>
                 <button type="button" class="btn btn-secondary addNote" data-toggle="modal"
                     data-target="#noteModal{{_id}}" data-id={{_id}}>Add a Note</button>
-                <button type="button" class="btn btn-secondary delete" data-id={{_id}}>Delete</button>
+                <button type="button" class="btn btn-secondary" id="delete" data-id={{_id}}>Delete</button>
             </div>
         </div>
         {{/each}}
         {{else}}
         <div class="panel panel-default">
             <div class="panel-body">
-                <h4>There are no saved articles.</h4>
+                <h4>Sorry, there are no saved articles.</h4>
             </div>
         </div>
         {{/if}}

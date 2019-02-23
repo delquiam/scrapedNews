@@ -9,33 +9,35 @@
 
 <!--Homepage-->
 <div class="container">
-    <div class="col-md-12 jumbotron">
+    <div class="col-md-12 jumbotron" id="front-page">
         <div class="text-center">
-            <h1> The Lily Mongo Scraper</h1>
+            <div style="font-family: 'Special Elite', cursive; " >The Lily Mongo Scraper</div>
+            {{!-- <h1> The Lily Mongo Scraper</h1> --}}
+
         </div>
 
     </div>
     <div class="col-md-12">
         {{#if articles}}
-            {{#each articles}}
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4>{{title}}</h4>
-                </div>
-                <div class="panel-body">
-                    <p> {{summary}}</p>
-                    <a href={{link}} target="_blank">{{link}}</a>
-                    <br><br>
-                    <button type="button" class="btn btn-secondary" data-id={{_id}}>Save Article</button>
-                </div>
+        {{#each articles}}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>{{title}}</h4>
             </div>
-            {{/each}}
+            <div class="panel-body">
+                <p> {{summary}}</p>
+                <a href={{link}} target="_blank">{{link}}</a>
+                <br><br>
+                <button type="button" class="btn btn-secondary" id="save">Save Article</button>
+            </div>
+        </div>
+        {{/each}}
         {{else}}
         <div class="panel panel-default">
             <div class="panel-body">
-            <h4>Oops...Looks like we don't have any new articles.</h4>
+                <h4>Oops...Looks like we don't have any new articles.</h4>
             </div>
-         </div>
+        </div>
         {{/if}}
     </div>
 </div>
