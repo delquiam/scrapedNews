@@ -41,7 +41,7 @@ $(".saveNote").on("click", function () {
     } else {
         $.ajax({
             method: "POST",
-            url: "/notes/saved" + thisId,
+            url: "/notes/saved/" + thisId,
             data: {
                 text: $("#noteText" + thisId).val()
             }
@@ -55,10 +55,6 @@ $(".saveNote").on("click", function () {
         });
     }
 });
-
-
-
-
 
 
 // Delete Note button

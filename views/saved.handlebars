@@ -59,8 +59,9 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <p class="previousNotes"> {{body}}</p>
-                        <button type="button" class="btn btn-secondary deleteNote" data-note-id={{_id}}
-                            data-article-id={{articles}}>X</button>
+                        {{!-- <button type="button" class="btn btn-secondary deleteNote" data-note-id={{_id}}
+                            data-article-id={{articles}}>X</button> --}}
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                     </div>
                 </div>
                 {{/each}}

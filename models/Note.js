@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 
 // Create the Note schema
 var NoteSchema = new Schema({
-  body: {
+  text: {
       type: String
   },
   article: {
