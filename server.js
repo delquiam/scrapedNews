@@ -36,6 +36,7 @@ app.engine("handlebars", exphbs({
 app.set("view engine", "handlebars");
 
 // Connect to the Mongo DB
+mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 
@@ -102,25 +103,6 @@ app.get("/articles", function (req, res) {
     });
 })
 
-
-
-
-// // Route for grabbing a specific Article by id, populate it with it's note
-// app.get("/articles/:id", function (req, res) {
-//     // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
-//     db.Article.findOne({ _id: req.params.id })
-//         // ..and populate all of the notes associated with it
-//         .populate("Note")
-//         .exec(function (err, doc) {
-//             if (err) {
-//                 console.log(err);
-//             }
-//             else {
-//                 res.json(doc);
-//             }
-//         });
-// });
-
 // Route for grabbing a specific Article by id, populate it with it's note
 app.get("/articles/:id", function(req, res) {
     // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
@@ -150,8 +132,6 @@ app.put("/articles/saved/:id", function (req, res) {
         });
 });
 
-
-
 // Delete an article
 app.post("/articles/delete/:id", function (req, res) {
     db.Article.findOneAndUpdate({ _id: req.params.id }, { saved: false })
@@ -166,48 +146,11 @@ app.post("/articles/delete/:id", function (req, res) {
 });
 
 
-// Create a new note
-// app.post("/notes/saved/:id", function (req, res) {
-//     // Create a new note and pass the req.body to the entry
-//     var newNote = new Note({
-//         body: req.body.text,
-//         article: req.params.id
-//     });
-//     console.log(req.body)
-//     // And save the new note the db
-//     newNote.save(function (err, note) {
-//         // Log any errors
-//         if (err) {
-//             console.log(err);
-//         }
-//         // Otherwise
-//         else {
-//             // Use the article id to find and update it's notes
-//             db.Article.findOneAndUpdate({ "_id": req.params.id }, { $push: { "notes": note } })
-//                 // Execute the above query
-//                 .exec(function (err) {
-//                     // Log any errors
-//                     if (err) {
-//                         console.log(err);
-//                         res.send(err);
-//                     }
-//                     else {
-//                         // Or send the note to the browser
-//                         res.send(note);
-//                     }
-//                 });
-//         }
-//     });
-// });
-
 // Route for saving/updating an Article's associated Note
 app.post("/notes/saved/:id", function(req, res) {
     // Create a new note and pass the req.body to the entry
     db.Note.create(req.body)
       .then(function(dbNote) {
-        // If a Note was created successfully, find one Article with an `_id` equal to `req.params.id`. Update the Article to be associated with the new Note
-        // { new: true } tells the query that we want it to return the updated User -- it returns the original by default
-        // Since our mongoose query returns a promise, we can chain another `.then` which receives the result of the query
         return db.Article.findOneAndUpdate({ _id: id }, { $push:{ note: dbNote._id} }, { new: true, upsert: true});
       })
       .then(function(dbArticle) {
@@ -220,7 +163,8 @@ app.post("/notes/saved/:id", function(req, res) {
       });
   });
   
-
+ 
+  
 
 // Delete a note
 app.delete("/notes/delete/:note_id/:article_id", function (req, res) {

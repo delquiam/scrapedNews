@@ -11,12 +11,12 @@ $("#scrape").click(function () {
 
 
 //Save Article button
-$(".save").on("click", function() {
+$(".save").on("click", function () {
     var thisId = $(this).attr("data-id");
     $.ajax({
         method: "PUT",
         url: "/articles/saved/" + thisId
-    }).done(function(data) {
+    }).done(function (data) {
         console.log(data);
         window.location = "/"
     })
@@ -46,6 +46,7 @@ $(".saveNote").on("click", function () {
                 text: $("#noteText" + thisId).val()
             }
         }).done(function (data) {
+            // $('#noteText').text( $('.previousNotes').val() );
             // Log the response
             console.log(data);
             // Empty the notes section
@@ -55,7 +56,6 @@ $(".saveNote").on("click", function () {
         });
     }
 });
-
 
 // Delete Note button
 $(".deleteNote").on("click", function () {

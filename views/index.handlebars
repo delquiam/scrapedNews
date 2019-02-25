@@ -9,35 +9,38 @@
 
 <!--Homepage-->
 <div class="container">
-    <div class="col-md-12 jumbotron" id="front-page">
+    <div class="col-md-12 jumbotron" id="frontPage">
         <div class="text-center">
-            <div style="font-family: 'Special Elite', cursive; " ><h1>The Lily Mongo Scraper</h1></div>
-            {{!-- <h1> The Lily Mongo Scraper</h1> --}}
-
-        </div>
-
-    </div>
-    <div class="col-md-12">
-        {{#if articles}}
-        {{#each articles}}
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4>{{title}}</h4>
+            <div style="font-family: 'Special Elite', cursive; ">
+                <h1>The Lily Mongo Scraper</h1>
             </div>
-            <div class="panel-body">
-                <p> {{summary}}</p>
-                <a href={{link}} target="_blank">{{link}}</a>
-                <br><br>
+        </div>
+    </div>
+    {{#if articles}}
+    {{#each articles}}
+    <div class="card">
+        <h3 class="card-header">{{title}}</h3>
+        <div class="row">
+            <div class="col-lg-8 card-block">
+                <p class="card-text">{{summary}}</p>
+                <a href={{link}} target="_blank" class="card-link">Read more</a>
+            </div>
+            <div class="col-lg-4 align-self-end text-right">
                 <button type="button" class="btn btn-secondary save" data-id={{_id}}>Save Article</button>
             </div>
         </div>
-        {{/each}}
-        {{else}}
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <h4>Oops...Looks like we don't have any new articles.</h4>
-            </div>
-        </div>
-        {{/if}}
     </div>
+</div>
+
+
+<br><br>
+{{/each}}
+</div>
+{{else}}
+<div class="card">
+    <h4>Oops...Looks like there are no new articles.</h4>
+</div>
+
+{{/if}}
+
 </div>

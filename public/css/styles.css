@@ -1,42 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Special+Elite');
 
-#front-page{
+#frontPage{
     font-family: 'Special Elite', cursive;
-    font-size:  50px;
+    font-size:  75px;
     font-weight:  bold;
 }
-
+#savedPage{
+    font-family: 'Special Elite', cursive;
+    font-size:  75px;
+    font-weight:  bold;
+}
 body {
-    
-    padding-top: 70px;
+    padding: 50px;
 }
 
-.deleteNote {
-	display: inline-block;
-}
-
-.previousNotes {
-    display: inline-block;
-    width: 90%
-}
-
-#scrape {
-    margin: 8px 0px;
-}
-.close {
-    float: right;
-    font-size: 21px;
-    font-weight: 700;
-    line-height: 1;
-    color: #000;
-    text-shadow: 0 1px 0 #fff;
-    filter: alpha(opacity=20);
-    opacity: .2;
-}
-button.close {
-    -webkit-appearance: none;
-    padding: 0;
-    cursor: pointer;
-    background: 0 0;
-    border: 0;
-}

@@ -11,42 +11,50 @@
 
 <div class="container">
 
-    <div class="col-md-12 jumbotron">
+    <div class="col-md-12 jumbotron" id="savedPage">
         <div class="text-center">
-           <div style="font-family: 'Special Elite', cursive; " ><h1>Saved Articles</h1></div>
+            {{!-- <div style="font-family: 'Special Elite', cursive; "> --}}
+                <h1>Saved Articles</h1>
+            {{!-- </div> --}}
         </div>
     </div>
-    <div class="col-md-12">
-        {{#if articles}}
-        {{#each articles}}
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4>{{title}}</h4>
+
+    {{#if articles}}
+    {{#each articles}}
+    <div class="card">
+        <h3 class="card-header">{{title}}</h3>
+        <div class="row">
+            <div class="col-lg-8 card-block">
+                <p class="card-text">{{summary}}</p>
+                <a href={{link}} target="_blank" class="card-link">Read more</a>
             </div>
-            <div class="panel-body">
-                <p> {{summary}}</p>
-                <a href={{link}} target="_blank">{{link}}</a>
-                <br><br>
-                <button type="button" class="btn btn-secondary addNote" data-toggle="modal"
+            <div class="col-lg-4 align-self-end text-right">
+                <button type="button" class="btn btn-dark m-2 addNote" data-toggle="modal"
                     data-target="#noteModal{{_id}}" data-id={{_id}}>Add a Note</button>
                 <button type="button" class="btn btn-secondary delete" data-id={{_id}}>Delete</button>
+
             </div>
         </div>
-        {{/each}}
-        {{else}}
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <h4>Sorry, there are no saved articles.</h4>
-            </div>
-        </div>
-        {{/if}}
     </div>
 </div>
+
+<br><br>
+
+{{/each}}
+</div>
+{{else}}
+
+<div class="card">
+    <h4>Sorry, there are no saved articles.</h4>
+</div>
+{{/if}}
+
 
 <!--Clicked Notes Modal-->
 {{#each articles}}
 <div class="modal fade modalNote" id="noteModal{{_id}}" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
+        {{!-- <form method="post" action="add-note"> --}}
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
@@ -58,10 +66,10 @@
                 {{#each notes}}
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <p class="previousNotes"> {{body}}</p>
-                        {{!-- <button type="button" class="btn btn-secondary deleteNote" data-note-id={{_id}}
-                            data-article-id={{articles}}>X</button> --}}
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <p class="previousNotes"> {{text}}</p>
+                        <button type="button" class="btn btn-secondary deleteNote" data-note-id={{_id}}
+                            data-article-id={{articles}}>X</button>
+
                     </div>
                 </div>
                 {{/each}}
@@ -81,6 +89,7 @@
                 <button type="button" class="btn btn-secondary saveNote" data-id={{_id}}>Save Note</button>
             </div>
         </div>
+        {{!-- </form> --}}
     </div>
 </div>
 {{/each}}
