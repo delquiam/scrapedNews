@@ -4,8 +4,6 @@ var logger = require("morgan");
 var mongoose = require("mongoose");
 var axios = require("axios");
 var cheerio = require("cheerio");
-var path = require("path");
-var bparser = require("body-parser");
 
 
 // Require all models
@@ -65,7 +63,8 @@ app.post("/scrape", function (req, res) {
             entry.summary = $(element).parent().next().text();
             // console.log(entry);
             entry.saved = false;
-            db.Article.create(entry)
+            if(summary.length < 1) {
+                db.Article.create(entry)
                 .then(function (dbArticle) {
                     // View the added result in the console
                     // console.log(dbArticle);
@@ -74,6 +73,8 @@ app.post("/scrape", function (req, res) {
                     // If an error occurred, log it
                     console.log(err);
                 });
+            }
+           
         });
         // Send a message to the client
         res.send("Scrape Complete");
@@ -84,6 +85,7 @@ app.post("/scrape", function (req, res) {
 app.get("/saved", function (req, res) {
     // Grab every document in the Articles collection
     db.Article.find({ saved: true })
+    .populate("note")
         .then(function (dbArticle) {
             console.log(dbArticle);
             // If we were able to successfully find Articles, send them back to the client
@@ -153,7 +155,7 @@ app.post("/notes/saved/:id", function(req, res) {
     // Create a new note and pass the req.body to the entry
     db.Note.create(req.body)
       .then(function(dbNote) {
-        return db.Article.findOneAndUpdate({ _id: id }, { $push:{ note: dbNote._id} }, { new: true});
+        return db.Article.findOneAndUpdate({ _id: req.params.id }, { $push:{ note: dbNote._id} }, { new: true});
       })
       .then(function(dbArticle) {
         // If we were able to successfully update an Article, send it back to the client
@@ -168,30 +170,32 @@ app.post("/notes/saved/:id", function(req, res) {
 
 
 // Delete a note
-app.delete("/notes/delete/:note_id/:article_id", function (req, res) {
+app.delete("/notes/delete/:note_id", function (req, res) {
     // Use the note id to find and delete it
-    db.Note.findOneAndRemove({ "_id": req.params.note_id }, function (err) {
-        // Log any errors
-        if (err) {
-            console.log(err);
-            res.send(err);
-        }
-        else {
-            db.Article.findOneAndUpdate({ "_id": req.params.article_id }, { $pull: { "notes": req.params.note_id } })
-                // Execute the above query
-                .exec(function (err) {
-                    // Log any errors
-                    if (err) {
-                        console.log(err);
-                        res.send(err);
-                    }
-                    else {
-                        // Or send the note to the browser
-                        res.send("Note Deleted");
-                    }
-                });
-        }
-    });
+    db.Note.findOneAndRemove({ _id: req.params.note_id })
+    .then(dbNote => res.send("Note Deleted"))
+    .catch(error => console.log(error));//, function (err) {
+    //     // Log any errors
+    //     if (err) {
+    //         console.log(err);
+    //         res.send(err);
+    //     }
+    //     else {
+    //         db.Article.findOneAndUpdate({ _id: req.params.article_id }, { $pull: { notes: req.params.note_id } })
+    //             // Execute the above query
+    //             .exec(function (err) {
+    //                 // Log any errors
+    //                 if (err) {
+    //                     console.log(err);
+    //                     res.send(err);
+    //                 }
+    //                 else {
+    //                     // Or send the note to the browser
+    //                     res.send("Note Deleted");
+    //                 }
+    //             });
+    //     }
+    // });
 });
 
 
